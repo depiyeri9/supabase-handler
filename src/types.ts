@@ -18,6 +18,7 @@ export type Database = {
           created_at: string | null
           excerpt: string
           id: string
+          project_id: string
           slug: string
           status: string
           title: string
@@ -30,6 +31,7 @@ export type Database = {
           created_at?: string | null
           excerpt: string
           id?: string
+          project_id: string
           slug: string
           status: string
           title: string
@@ -42,11 +44,20 @@ export type Database = {
           created_at?: string | null
           excerpt?: string
           id?: string
+          project_id?: string
           slug?: string
           status?: string
           title?: string
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "articles_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       gallery_items: {
         Row: {
@@ -55,6 +66,7 @@ export type Database = {
           id: string
           image_url: string
           is_featured: boolean | null
+          project_id: string
           title: string
         }
         Insert: {
@@ -63,6 +75,7 @@ export type Database = {
           id?: string
           image_url: string
           is_featured?: boolean | null
+          project_id: string
           title: string
         }
         Update: {
@@ -71,7 +84,84 @@ export type Database = {
           id?: string
           image_url?: string
           is_featured?: boolean | null
+          project_id?: string
           title?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "gallery_items_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      products: {
+        Row: {
+          created_at: string | null
+          description: string | null
+          id: string
+          images: string[] | null
+          is_active: boolean | null
+          name: string
+          price: number
+          project_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          description?: string | null
+          id?: string
+          images?: string[] | null
+          is_active?: boolean | null
+          name: string
+          price: number
+          project_id: string
+        }
+        Update: {
+          created_at?: string | null
+          description?: string | null
+          id?: string
+          images?: string[] | null
+          is_active?: boolean | null
+          name?: string
+          price?: number
+          project_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "products_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      projects: {
+        Row: {
+          created_at: string | null
+          description: string | null
+          id: string
+          name: string
+          slug: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          description?: string | null
+          id?: string
+          name: string
+          slug: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string | null
+          description?: string | null
+          id?: string
+          name?: string
+          slug?: string
+          user_id?: string
         }
         Relationships: []
       }
@@ -84,6 +174,7 @@ export type Database = {
           id: string
           is_featured: boolean | null
           parent_name: string
+          project_id: string
           rating: number
           testimonial: string
         }
@@ -95,6 +186,7 @@ export type Database = {
           id?: string
           is_featured?: boolean | null
           parent_name: string
+          project_id: string
           rating: number
           testimonial: string
         }
@@ -106,10 +198,19 @@ export type Database = {
           id?: string
           is_featured?: boolean | null
           parent_name?: string
+          project_id?: string
           rating?: number
           testimonial?: string
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "testimonials_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+        ]
       }
     }
     Views: {
