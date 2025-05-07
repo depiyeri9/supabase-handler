@@ -1,6 +1,6 @@
 import { SupabaseClient } from '@supabase/supabase-js';
-import { checkProjectAuthorization } from "@/api-client";
-import { Tables, TablesInsert, TablesUpdate } from "@/types";
+import { checkProjectAuthorization } from "../utils";
+import { Tables, TablesInsert, TablesUpdate } from "../types";
 
 
 // Types
@@ -48,7 +48,7 @@ export const initProducts = (supabase: SupabaseClient, projectId: string) => {
   // 🔐 Admin Function - Get ALL Products (including inactive)
   const getAllProducts = async () => {
     try {
-      const auth = await checkProjectAuthorization();
+      const auth = await checkProjectAuthorization(supabase, projectId);
       if (!auth.isAuthorized) {
         return { data: null, error: auth.error };
       }
@@ -69,7 +69,7 @@ export const initProducts = (supabase: SupabaseClient, projectId: string) => {
   // 🔐 Admin Function - Create Product
   const createProduct = async (product: Omit<ProductInsert, "project_id">) => {
     try {
-      const auth = await checkProjectAuthorization();
+      const auth = await checkProjectAuthorization(supabase, projectId);
       if (!auth.isAuthorized) {
         return { data: null, error: auth.error };
       }
@@ -90,7 +90,7 @@ export const initProducts = (supabase: SupabaseClient, projectId: string) => {
   // 🔐 Admin Function - Update Product
   const updateProduct = async (id: string, updates: ProductUpdate) => {
     try {
-      const auth = await checkProjectAuthorization();
+      const auth = await checkProjectAuthorization(supabase, projectId);
       if (!auth.isAuthorized) {
         return { data: null, error: auth.error };
       }
@@ -113,7 +113,7 @@ export const initProducts = (supabase: SupabaseClient, projectId: string) => {
   // 🔐 Admin Function - Delete Product
   const deleteProduct = async (id: string) => {
     try {
-      const auth = await checkProjectAuthorization();
+      const auth = await checkProjectAuthorization(supabase, projectId);
       if (!auth.isAuthorized) {
         return { data: null, error: auth.error };
       }

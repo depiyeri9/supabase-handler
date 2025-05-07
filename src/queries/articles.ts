@@ -1,5 +1,5 @@
-import { Tables, TablesInsert, TablesUpdate } from "@/types";
-import { checkProjectAuthorization } from "@/api-client";
+import { Tables, TablesInsert, TablesUpdate } from "../types";
+import { checkProjectAuthorization } from "../utils";
 import { SupabaseClient } from "@supabase/supabase-js";
 
 
@@ -68,7 +68,7 @@ export const initArticles = (supabase: SupabaseClient, projectId: string) => {
   // 🔐 Admin Function - Get ALL Articles (including drafts)
   const getAllArticles = async () => {
     try {
-      const auth = await checkProjectAuthorization();
+      const auth = await checkProjectAuthorization(supabase, projectId);
       if (!auth.isAuthorized) {
         return { data: null, error: auth.error };
       }
@@ -89,7 +89,7 @@ export const initArticles = (supabase: SupabaseClient, projectId: string) => {
   // 🔐 Admin Function - Create Article
   const createArticle = async (article: Omit<ArticleInsert, "project_id">) => {
     try {
-      const auth = await checkProjectAuthorization();
+      const auth = await checkProjectAuthorization(supabase, projectId);
       if (!auth.isAuthorized) {
         return { data: null, error: auth.error };
       }
@@ -110,7 +110,7 @@ export const initArticles = (supabase: SupabaseClient, projectId: string) => {
   // 🔐 Admin Function - Update Article
   const updateArticle = async (id: string, updates: ArticleUpdate) => {
     try {
-      const auth = await checkProjectAuthorization();
+      const auth = await checkProjectAuthorization(supabase, projectId);
       if (!auth.isAuthorized) {
         return { data: null, error: auth.error };
       }
@@ -133,7 +133,7 @@ export const initArticles = (supabase: SupabaseClient, projectId: string) => {
   // 🔐 Admin Function - Update Article Status
   const updateArticleStatus = async (id: string, status: "draft" | "published") => {
     try {
-      const auth = await checkProjectAuthorization();
+      const auth = await checkProjectAuthorization(supabase, projectId);
       if (!auth.isAuthorized) {
         return { data: null, error: auth.error };
       }
@@ -156,7 +156,7 @@ export const initArticles = (supabase: SupabaseClient, projectId: string) => {
   // 🔐 Admin Function - Delete Article
   const deleteArticle = async (id: string) => {
     try {
-      const auth = await checkProjectAuthorization();
+      const auth = await checkProjectAuthorization(supabase, projectId);
       if (!auth.isAuthorized) {
         return { data: null, error: auth.error };
       }

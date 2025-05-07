@@ -1,5 +1,5 @@
-import { checkProjectAuthorization } from "@/api-client";
-import { Tables, TablesInsert, TablesUpdate } from "@/types";
+import { checkProjectAuthorization } from "../utils";
+import { Tables, TablesInsert, TablesUpdate } from "../types";
 import { SupabaseClient } from "@supabase/supabase-js";
 
 
@@ -45,7 +45,7 @@ export const initTestimonials = (supabase: SupabaseClient, projectId: string) =>
   // 🔐 Admin Function - Create Testimonial
   const createTestimonial = async (testimonial: Omit<TestimonialInsert, "project_id">) => {
     try {
-      const auth = await checkProjectAuthorization();
+      const auth = await checkProjectAuthorization(supabase, projectId);
       if (!auth.isAuthorized) {
         return { data: null, error: auth.error };
       }
@@ -66,7 +66,7 @@ export const initTestimonials = (supabase: SupabaseClient, projectId: string) =>
   // 🔐 Admin Function - Update Testimonial
   const updateTestimonial = async (id: string, updates: TestimonialUpdate) => {
     try {
-      const auth = await checkProjectAuthorization();
+      const auth = await checkProjectAuthorization(supabase, projectId);
       if (!auth.isAuthorized) {
         return { data: null, error: auth.error };
       }
@@ -89,7 +89,7 @@ export const initTestimonials = (supabase: SupabaseClient, projectId: string) =>
   // 🔐 Admin Function - Delete Testimonial
   const deleteTestimonial = async (id: string) => {
     try {
-      const auth = await checkProjectAuthorization();
+      const auth = await checkProjectAuthorization(supabase, projectId);
       if (!auth.isAuthorized) {
         return { data: null, error: auth.error };
       }

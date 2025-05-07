@@ -1,5 +1,5 @@
-import { checkProjectAuthorization } from "@/api-client";
-import { Tables, TablesInsert, TablesUpdate } from "@/types";
+import { checkProjectAuthorization } from "../utils";
+import { Tables, TablesInsert, TablesUpdate } from "../types";
 import { SupabaseClient } from "@supabase/supabase-js";
 
 
@@ -62,7 +62,7 @@ export const initGallery = (supabase: SupabaseClient, projectId: string) => {
   // 🔐 Admin Function - Create Gallery Item
   const createGalleryItem = async (item: GalleryItemInsert) => {
     try {
-      const auth = await checkProjectAuthorization();
+      const auth = await checkProjectAuthorization(supabase, projectId);
       if (!auth.isAuthorized) {
         return { data: null, error: auth.error };
       }
@@ -83,7 +83,7 @@ export const initGallery = (supabase: SupabaseClient, projectId: string) => {
   // 🔐 Admin Function - Update Gallery Item
   const updateGalleryItem = async (id: string, updates: GalleryItemUpdate) => {
     try {
-      const auth = await checkProjectAuthorization();
+      const auth = await checkProjectAuthorization(supabase, projectId);
       if (!auth.isAuthorized) {
         return { data: null, error: auth.error };
       }
@@ -118,7 +118,7 @@ export const initGallery = (supabase: SupabaseClient, projectId: string) => {
   // 🔐 Admin Function - Delete Gallery Item
   const deleteGalleryItem = async (id: string) => {
     try {
-      const auth = await checkProjectAuthorization();
+      const auth = await checkProjectAuthorization(supabase, projectId);
       if (!auth.isAuthorized) {
         return { data: null, error: auth.error };
       }

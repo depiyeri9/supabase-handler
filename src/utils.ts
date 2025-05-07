@@ -1,8 +1,4 @@
-import { supabase } from "./client";
-
-
-// Current project ID - this would be set based on deployment environment
-export const PROJECT_ID = "591d7992-2b29-43e0-b2a1-8c1ea29de3ff";
+import { SupabaseClient } from "@supabase/supabase-js";
 
 // Type for auth checks
 export type AuthCheckResult = {
@@ -12,7 +8,7 @@ export type AuthCheckResult = {
 };
 
 // Check if the user is authorized for this project
-export const checkProjectAuthorization = async (): Promise<AuthCheckResult> => {
+export const checkProjectAuthorization = async (supabase: SupabaseClient, projectId: string): Promise<AuthCheckResult> => {
   try {
     const { data: { user } } = await supabase.auth.getUser();
     
@@ -23,7 +19,7 @@ export const checkProjectAuthorization = async (): Promise<AuthCheckResult> => {
     const { data: project, error } = await supabase
       .from("projects")
       .select("user_id")
-      .eq("id", PROJECT_ID)
+      .eq("id", projectId)
       .single();
 
     if (error) {
