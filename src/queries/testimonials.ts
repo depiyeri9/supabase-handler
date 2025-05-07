@@ -1,4 +1,4 @@
-import { handleError, checkProjectAuthorization } from "@/api-client";
+import { checkProjectAuthorization } from "@/api-client";
 import { Tables, TablesInsert, TablesUpdate } from "@/types";
 import { SupabaseClient } from "@supabase/supabase-js";
 
@@ -21,7 +21,6 @@ export const initTestimonials = (supabase: SupabaseClient, projectId: string) =>
       if (error) throw error;
       return { data, error: null };
     } catch (error) {
-      handleError(error, "Failed to fetch testimonials");
       return { data: null, error };
     }
   };
@@ -39,7 +38,6 @@ export const initTestimonials = (supabase: SupabaseClient, projectId: string) =>
       if (error) throw error;
       return { data, error: null };
     } catch (error) {
-      handleError(error, "Failed to fetch featured testimonials");
       return { data: null, error };
     }
   };
@@ -61,7 +59,6 @@ export const initTestimonials = (supabase: SupabaseClient, projectId: string) =>
       if (error) throw error;
       return { data, error: null };
     } catch (error) {
-      handleError(error, "Failed to create testimonial");
       return { data: null, error };
     }
   };
@@ -85,7 +82,6 @@ export const initTestimonials = (supabase: SupabaseClient, projectId: string) =>
       if (error) throw error;
       return { data, error: null };
     } catch (error) {
-      handleError(error, "Failed to update testimonial");
       return { data: null, error };
     }
   };
@@ -109,7 +105,6 @@ export const initTestimonials = (supabase: SupabaseClient, projectId: string) =>
       if (error) throw error;
       return { data, error: null };
     } catch (error) {
-      handleError(error, "Failed to delete testimonial");
       return { data: null, error };
     }
   };

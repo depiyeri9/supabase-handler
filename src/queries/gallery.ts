@@ -1,4 +1,4 @@
-import { handleError, checkProjectAuthorization } from "@/api-client";
+import { checkProjectAuthorization } from "@/api-client";
 import { Tables, TablesInsert, TablesUpdate } from "@/types";
 import { SupabaseClient } from "@supabase/supabase-js";
 
@@ -21,7 +21,6 @@ export const initGallery = (supabase: SupabaseClient, projectId: string) => {
       if (error) throw error;
       return { data, error: null };
     } catch (error) {
-      handleError(error, "Failed to fetch gallery items");
       return { data: null, error };
     }
   };
@@ -39,7 +38,6 @@ export const initGallery = (supabase: SupabaseClient, projectId: string) => {
       if (error) throw error;
       return { data, error: null };
     } catch (error) {
-      handleError(error, "Failed to fetch featured gallery items");
       return { data: null, error };
     }
   };
@@ -57,7 +55,6 @@ export const initGallery = (supabase: SupabaseClient, projectId: string) => {
       if (error) throw error;
       return { data, error: null };
     } catch (error) {
-      handleError(error, "Failed to fetch gallery items by category");
       return { data: null, error };
     }
   };
@@ -79,7 +76,6 @@ export const initGallery = (supabase: SupabaseClient, projectId: string) => {
       if (error) throw error;
       return { data, error: null };
     } catch (error) {
-      handleError(error, "Failed to create gallery item");
       return { data: null, error };
     }
   };
@@ -115,7 +111,6 @@ export const initGallery = (supabase: SupabaseClient, projectId: string) => {
       if (error) throw error;
       return { data, error: null };
     } catch (error) {
-      handleError(error, "Failed to update gallery item");
       return { data: null, error };
     }
   };
@@ -139,7 +134,6 @@ export const initGallery = (supabase: SupabaseClient, projectId: string) => {
       if (error) throw error;
       return { data, error: null };
     } catch (error) {
-      handleError(error, "Failed to delete gallery item");
       return { data: null, error };
     }
   };

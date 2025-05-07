@@ -1,5 +1,5 @@
 import { Tables, TablesInsert, TablesUpdate } from "@/types";
-import { checkProjectAuthorization, handleError } from "@/api-client";
+import { checkProjectAuthorization } from "@/api-client";
 import { SupabaseClient } from "@supabase/supabase-js";
 
 
@@ -25,7 +25,6 @@ export const initArticles = (supabase: SupabaseClient, projectId: string) => {
       if (error) throw error;
       return { data, error: null };
     } catch (error) {
-      handleError(error, "Failed to fetch articles");
       return { data: null, error };
     }
   };
@@ -44,7 +43,6 @@ export const initArticles = (supabase: SupabaseClient, projectId: string) => {
       if (error) throw error;
       return { data, error: null };
     } catch (error) {
-      handleError(error, "Failed to fetch article");
       return { data: null, error };
     }
   };
@@ -63,7 +61,6 @@ export const initArticles = (supabase: SupabaseClient, projectId: string) => {
       if (error) throw error;
       return { data, error: null };
     } catch (error) {
-      handleError(error, "Failed to fetch articles by category");
       return { data: null, error };
     }
   };
@@ -85,7 +82,6 @@ export const initArticles = (supabase: SupabaseClient, projectId: string) => {
       if (error) throw error;
       return { data, error: null };
     } catch (error) {
-      handleError(error, "Failed to fetch all articles");
       return { data: null, error };
     }
   };
@@ -107,7 +103,6 @@ export const initArticles = (supabase: SupabaseClient, projectId: string) => {
       if (error) throw error;
       return { data, error: null };
     } catch (error) {
-      handleError(error, "Failed to create article");
       return { data: null, error };
     }
   };
@@ -131,7 +126,6 @@ export const initArticles = (supabase: SupabaseClient, projectId: string) => {
       if (error) throw error;
       return { data, error: null };
     } catch (error) {
-      handleError(error, "Failed to update article");
       return { data: null, error };
     }
   };
@@ -155,7 +149,6 @@ export const initArticles = (supabase: SupabaseClient, projectId: string) => {
       if (error) throw error;
       return { data, error: null };
     } catch (error) {
-      handleError(error, "Failed to update article status");
       return { data: null, error };
     }
   };
@@ -179,7 +172,6 @@ export const initArticles = (supabase: SupabaseClient, projectId: string) => {
       if (error) throw error;
       return { data, error: null };
     } catch (error) {
-      handleError(error, "Failed to delete article");
       return { data: null, error };
     }
   };

@@ -1,5 +1,5 @@
 import { SupabaseClient } from '@supabase/supabase-js';
-import { handleError, checkProjectAuthorization } from "@/api-client";
+import { checkProjectAuthorization } from "@/api-client";
 import { Tables, TablesInsert, TablesUpdate } from "@/types";
 
 
@@ -23,7 +23,6 @@ export const initProducts = (supabase: SupabaseClient, projectId: string) => {
       if (error) throw error;
       return { data, error: null };
     } catch (error) {
-      handleError(error, "Failed to fetch products");
       return { data: null, error };
     }
   };
@@ -42,7 +41,6 @@ export const initProducts = (supabase: SupabaseClient, projectId: string) => {
       if (error) throw error;
       return { data, error: null };
     } catch (error) {
-      handleError(error, "Failed to fetch product");
       return { data: null, error };
     }
   };
@@ -64,7 +62,6 @@ export const initProducts = (supabase: SupabaseClient, projectId: string) => {
       if (error) throw error;
       return { data, error: null };
     } catch (error) {
-      handleError(error, "Failed to fetch all products");
       return { data: null, error };
     }
   };
@@ -86,7 +83,6 @@ export const initProducts = (supabase: SupabaseClient, projectId: string) => {
       if (error) throw error;
       return { data, error: null };
     } catch (error) {
-      handleError(error, "Failed to create product");
       return { data: null, error };
     }
   };
@@ -110,7 +106,6 @@ export const initProducts = (supabase: SupabaseClient, projectId: string) => {
       if (error) throw error;
       return { data, error: null };
     } catch (error) {
-      handleError(error, "Failed to update product");
       return { data: null, error };
     }
   };
@@ -134,7 +129,6 @@ export const initProducts = (supabase: SupabaseClient, projectId: string) => {
       if (error) throw error;
       return { data, error: null };
     } catch (error) {
-      handleError(error, "Failed to delete product");
       return { data: null, error };
     }
   };

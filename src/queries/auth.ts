@@ -1,4 +1,3 @@
-import { handleError } from "@/api-client";
 import { SupabaseClient } from "@supabase/supabase-js";
 
 
@@ -39,7 +38,6 @@ export const initAuth = (supabase: SupabaseClient, projectId: string) => {
 
       return { data, error: null };
     } catch (error) {
-      handleError(error, "Login failed");
       return { data: null, error };
     }
   };
@@ -51,7 +49,6 @@ export const initAuth = (supabase: SupabaseClient, projectId: string) => {
       if (error) throw error;
       return { error: null };
     } catch (error) {
-      handleError(error, "Logout failed");
       return { error };
     }
   };
@@ -63,7 +60,6 @@ export const initAuth = (supabase: SupabaseClient, projectId: string) => {
       if (error) throw error;
       return { data, error: null };
     } catch (error) {
-      handleError(error, "Failed to get session");
       return { data: null, error };
     }
   };
@@ -75,7 +71,6 @@ export const initAuth = (supabase: SupabaseClient, projectId: string) => {
       if (error) throw error;
       return { data: data.user, error: null };
     } catch (error) {
-      handleError(error, "Failed to get user");
       return { data: null, error };
     }
   };
