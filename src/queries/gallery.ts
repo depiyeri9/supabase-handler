@@ -60,7 +60,7 @@ export const initGallery = (supabase: SupabaseClient, projectId: string) => {
   };
 
   // 🔐 Admin Function - Create Gallery Item
-  const createGalleryItem = async (item: GalleryItemInsert) => {
+  const createGalleryItem = async (item: Omit<GalleryItemInsert, "project_id">) => {
     try {
       const auth = await checkProjectAuthorization(supabase, projectId);
       if (!auth.isAuthorized) {
