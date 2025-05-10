@@ -4,14 +4,31 @@ import { Tables, TablesInsert, TablesUpdate } from "../types";
 
 
 // Types
-type Product = Tables<"products">;
-type ProductInsert = TablesInsert<"products">;
-type ProductUpdate = TablesUpdate<"products">;
+export type Product = Tables<"products">;
+export type ProductInsert = TablesInsert<"products">;
+export type ProductUpdate = TablesUpdate<"products">;
+
+export type getProductsDTO = () => Promise<{ data: Product[] | null; error: any }>;
+export type getProductByIdDTO = (productId: string) => Promise<{ data: Product | null; error: any }>;
+export type getAllProductsDTO = () => Promise<{ data: Product[] | null; error: any }>;
+export type createProductDTO = (product: Omit<ProductInsert, "project_id">) => Promise<{ data: Product | null; error: any }>;
+export type updateProductDTO = (id: string, updates: ProductUpdate) => Promise<{ data: Product | null; error: any }>;
+export type deleteProductDTO = (id: string) => Promise<{ data: Product | null; error: any }>;
 
 
-export const initProducts = (supabase: SupabaseClient, projectId: string) => {
+// Define a type for all query methods
+export type ProductsQueries = {
+  getProducts: getProductsDTO;
+  getProductById: getProductByIdDTO;
+  getAllProducts: getAllProductsDTO;
+  createProduct: createProductDTO;
+  updateProduct: updateProductDTO;
+  deleteProduct: deleteProductDTO;
+};
+
+export const initProducts = (supabase: SupabaseClient, projectId: string): ProductsQueries => {
   // 🔓 Public Query - Get Products
-  const getProducts = async () => {
+  const getProducts = async (): Promise<{ data: Product[] | null; error: any }> => {
     try {
       const { data, error } = await supabase
         .from("products")
@@ -28,7 +45,7 @@ export const initProducts = (supabase: SupabaseClient, projectId: string) => {
   };
 
   // 🔓 Public Query - Get Product by ID
-  const getProductById = async (productId: string) => {
+  const getProductById = async (productId: string): Promise<{ data: Product | null; error: any }> => {
     try {
       const { data, error } = await supabase
         .from("products")
@@ -46,7 +63,7 @@ export const initProducts = (supabase: SupabaseClient, projectId: string) => {
   };
 
   // 🔐 Admin Function - Get ALL Products (including inactive)
-  const getAllProducts = async () => {
+  const getAllProducts = async (): Promise<{ data: Product[] | null; error: any }> => {
     try {
       const auth = await checkProjectAuthorization(supabase, projectId);
       if (!auth.isAuthorized) {
@@ -67,7 +84,7 @@ export const initProducts = (supabase: SupabaseClient, projectId: string) => {
   };
 
   // 🔐 Admin Function - Create Product
-  const createProduct = async (product: Omit<ProductInsert, "project_id">) => {
+  const createProduct = async (product: Omit<ProductInsert, "project_id">): Promise<{ data: Product | null; error: any }> => {
     try {
       const auth = await checkProjectAuthorization(supabase, projectId);
       if (!auth.isAuthorized) {
@@ -88,7 +105,7 @@ export const initProducts = (supabase: SupabaseClient, projectId: string) => {
   };
 
   // 🔐 Admin Function - Update Product
-  const updateProduct = async (id: string, updates: ProductUpdate) => {
+  const updateProduct = async (id: string, updates: ProductUpdate): Promise<{ data: Product | null; error: any }> => {
     try {
       const auth = await checkProjectAuthorization(supabase, projectId);
       if (!auth.isAuthorized) {
@@ -111,7 +128,7 @@ export const initProducts = (supabase: SupabaseClient, projectId: string) => {
   };
 
   // 🔐 Admin Function - Delete Product
-  const deleteProduct = async (id: string) => {
+  const deleteProduct = async (id: string): Promise<{ data: Product | null; error: any }> => {
     try {
       const auth = await checkProjectAuthorization(supabase, projectId);
       if (!auth.isAuthorized) {
@@ -141,4 +158,4 @@ export const initProducts = (supabase: SupabaseClient, projectId: string) => {
     updateProduct,
     deleteProduct,
   };
-}
+};

@@ -2,15 +2,29 @@ import { checkProjectAuthorization } from "../utils";
 import { Tables, TablesInsert, TablesUpdate } from "../types";
 import { SupabaseClient } from "@supabase/supabase-js";
 
-
 // Types
-type Testimonial = Tables<"testimonials">;
-type TestimonialInsert = TablesInsert<"testimonials">;
-type TestimonialUpdate = TablesUpdate<"testimonials">;
+export type Testimonial = Tables<"testimonials">;
+export type TestimonialInsert = TablesInsert<"testimonials">;
+export type TestimonialUpdate = TablesUpdate<"testimonials">;
 
-export const initTestimonials = (supabase: SupabaseClient, projectId: string) => {
+export type getTestimonialsDTO = () => Promise<{ data: Testimonial[] | null; error: any }>;
+export type getFeaturedTestimonialsDTO = () => Promise<{ data: Testimonial[] | null; error: any }>;
+export type createTestimonialDTO = (testimonial: Omit<TestimonialInsert, "project_id">) => Promise<{ data: Testimonial | null; error: any }>;
+export type updateTestimonialDTO = (id: string, updates: TestimonialUpdate) => Promise<{ data: Testimonial | null; error: any }>;
+export type deleteTestimonialDTO = (id: string) => Promise<{ data: Testimonial | null; error: any }>;
+
+// Define a type for all query methods
+export type TestimonialsQueries = {
+  getTestimonials: getTestimonialsDTO;
+  getFeaturedTestimonials: getFeaturedTestimonialsDTO;
+  createTestimonial: createTestimonialDTO;
+  updateTestimonial: updateTestimonialDTO;
+  deleteTestimonial: deleteTestimonialDTO;
+};
+
+export const initTestimonials = (supabase: SupabaseClient, projectId: string): TestimonialsQueries => {
   // 🔓 Public Query - Get Testimonials
-  const getTestimonials = async () => {
+  const getTestimonials = async (): Promise<{ data: Testimonial[] | null; error: any }> => {
     try {
       const { data, error } = await supabase
         .from("testimonials")
@@ -26,7 +40,7 @@ export const initTestimonials = (supabase: SupabaseClient, projectId: string) =>
   };
 
   // 🔓 Public Query - Get Featured Testimonials
-  const getFeaturedTestimonials = async () => {
+  const getFeaturedTestimonials = async (): Promise<{ data: Testimonial[] | null; error: any }> => {
     try {
       const { data, error } = await supabase
         .from("testimonials")
@@ -43,7 +57,7 @@ export const initTestimonials = (supabase: SupabaseClient, projectId: string) =>
   };
 
   // 🔐 Admin Function - Create Testimonial
-  const createTestimonial = async (testimonial: Omit<TestimonialInsert, "project_id">) => {
+  const createTestimonial = async (testimonial: Omit<TestimonialInsert, "project_id">): Promise<{ data: Testimonial | null; error: any }> => {
     try {
       const auth = await checkProjectAuthorization(supabase, projectId);
       if (!auth.isAuthorized) {
@@ -64,7 +78,7 @@ export const initTestimonials = (supabase: SupabaseClient, projectId: string) =>
   };
 
   // 🔐 Admin Function - Update Testimonial
-  const updateTestimonial = async (id: string, updates: TestimonialUpdate) => {
+  const updateTestimonial = async (id: string, updates: TestimonialUpdate): Promise<{ data: Testimonial | null; error: any }> => {
     try {
       const auth = await checkProjectAuthorization(supabase, projectId);
       if (!auth.isAuthorized) {
@@ -87,7 +101,7 @@ export const initTestimonials = (supabase: SupabaseClient, projectId: string) =>
   };
 
   // 🔐 Admin Function - Delete Testimonial
-  const deleteTestimonial = async (id: string) => {
+  const deleteTestimonial = async (id: string): Promise<{ data: Testimonial | null; error: any }> => {
     try {
       const auth = await checkProjectAuthorization(supabase, projectId);
       if (!auth.isAuthorized) {
@@ -115,5 +129,5 @@ export const initTestimonials = (supabase: SupabaseClient, projectId: string) =>
     createTestimonial,
     updateTestimonial,
     deleteTestimonial,
-  }
-}
+  };
+};

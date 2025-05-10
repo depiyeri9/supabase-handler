@@ -4,16 +4,35 @@ import { SupabaseClient } from "@supabase/supabase-js";
 
 
 // Types
-type Article = Tables<"articles">;
-type ArticleInsert = TablesInsert<"articles">;
-type ArticleUpdate = TablesUpdate<"articles">;
+export type Article = Tables<"articles">;
+export type ArticleInsert = TablesInsert<"articles">;
+export type ArticleUpdate = TablesUpdate<"articles">;
 
+export type getArticlesDTO = () => Promise<{ data: Article[] | null; error: any }>;
+export type getArticleBySlugDTO = (slug: string) => Promise<{ data: Article | null; error: any }>;
+export type getArticlesByCategoryDTO = (category: string) => Promise<{ data: Article[] | null; error: any }>;
+export type getAllArticlesDTO = () => Promise<{ data: Article[] | null; error: any }>;
+export type createArticleDTO = (article: Omit<ArticleInsert, "project_id">) => Promise<{ data: Article | null; error: any }>;
+export type updateArticleDTO = (id: string, updates: ArticleUpdate) => Promise<{ data: Article | null; error: any }>;
+export type updateArticleStatusDTO = (id: string, status: "draft" | "published") => Promise<{ data: Article | null; error: any }>;
+export type deleteArticleDTO = (id: string) => Promise<{ data: Article | null; error: any }>;
 
+// Define a type for all query methods
+export type ArticlesQueries = {
+  getArticles: getArticlesDTO;
+  getArticleBySlug: getArticleBySlugDTO;
+  getArticlesByCategory: getArticlesByCategoryDTO;
+  getAllArticles: getAllArticlesDTO;
+  createArticle: createArticleDTO;
+  updateArticle: updateArticleDTO;
+  updateArticleStatus: updateArticleStatusDTO;
+  deleteArticle: deleteArticleDTO;
+};
 
-export const initArticles = (supabase: SupabaseClient, projectId: string) => {
+export const initArticles = (supabase: SupabaseClient, projectId: string): ArticlesQueries => {
 
   // 🔓 Public Query - Get Articles
-  const getArticles = async () => {
+  const getArticles = async (): Promise<{ data: Article[] | null; error: any }> => {
     try {
       const { data, error } = await supabase
         .from("articles")
@@ -30,7 +49,7 @@ export const initArticles = (supabase: SupabaseClient, projectId: string) => {
   };
 
   // 🔓 Public Query - Get Article by Slug
-  const getArticleBySlug = async (slug: string) => {
+  const getArticleBySlug = async (slug: string): Promise<{ data: Article | null; error: any }> => {
     try {
       const { data, error } = await supabase
         .from("articles")
@@ -48,7 +67,7 @@ export const initArticles = (supabase: SupabaseClient, projectId: string) => {
   };
 
   // 🔓 Public Query - Get Articles by Category
-  const getArticlesByCategory = async (category: string) => {
+  const getArticlesByCategory = async (category: string): Promise<{ data: Article[] | null; error: any }> => {
     try {
       const { data, error } = await supabase
         .from("articles")
@@ -66,7 +85,7 @@ export const initArticles = (supabase: SupabaseClient, projectId: string) => {
   };
 
   // 🔐 Admin Function - Get ALL Articles (including drafts)
-  const getAllArticles = async () => {
+  const getAllArticles = async (): Promise<{ data: Article[] | null; error: any }> => {
     try {
       const auth = await checkProjectAuthorization(supabase, projectId);
       if (!auth.isAuthorized) {
@@ -87,7 +106,7 @@ export const initArticles = (supabase: SupabaseClient, projectId: string) => {
   };
 
   // 🔐 Admin Function - Create Article
-  const createArticle = async (article: Omit<ArticleInsert, "project_id">) => {
+  const createArticle = async (article: Omit<ArticleInsert, "project_id">): Promise<{ data: Article | null; error: any }> => {
     try {
       const auth = await checkProjectAuthorization(supabase, projectId);
       if (!auth.isAuthorized) {
@@ -108,7 +127,7 @@ export const initArticles = (supabase: SupabaseClient, projectId: string) => {
   };
 
   // 🔐 Admin Function - Update Article
-  const updateArticle = async (id: string, updates: ArticleUpdate) => {
+  const updateArticle = async (id: string, updates: ArticleUpdate): Promise<{ data: Article | null; error: any }> => {
     try {
       const auth = await checkProjectAuthorization(supabase, projectId);
       if (!auth.isAuthorized) {
@@ -131,7 +150,7 @@ export const initArticles = (supabase: SupabaseClient, projectId: string) => {
   };
 
   // 🔐 Admin Function - Update Article Status
-  const updateArticleStatus = async (id: string, status: "draft" | "published") => {
+  const updateArticleStatus = async (id: string, status: "draft" | "published"): Promise<{ data: Article | null; error: any }> => {
     try {
       const auth = await checkProjectAuthorization(supabase, projectId);
       if (!auth.isAuthorized) {
@@ -154,7 +173,7 @@ export const initArticles = (supabase: SupabaseClient, projectId: string) => {
   };
 
   // 🔐 Admin Function - Delete Article
-  const deleteArticle = async (id: string) => {
+  const deleteArticle = async (id: string): Promise<{ data: Article | null; error: any }> => {
     try {
       const auth = await checkProjectAuthorization(supabase, projectId);
       if (!auth.isAuthorized) {

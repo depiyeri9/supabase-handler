@@ -4,13 +4,30 @@ import { SupabaseClient } from "@supabase/supabase-js";
 
 
 // Types
-type GalleryItem = Tables<"gallery_items">;
-type GalleryItemInsert = TablesInsert<"gallery_items">;
-type GalleryItemUpdate = TablesUpdate<"gallery_items">;
+export type GalleryItem = Tables<"gallery_items">;
+export type GalleryItemInsert = TablesInsert<"gallery_items">;
+export type GalleryItemUpdate = TablesUpdate<"gallery_items">;
 
-export const initGallery = (supabase: SupabaseClient, projectId: string) => {
+export type getGalleryItemsDTO = () => Promise<{ data: GalleryItem[] | null; error: any }>;
+export type getFeaturedGalleryItemsDTO = () => Promise<{ data: GalleryItem[] | null; error: any }>;
+export type getGalleryItemsByCategoryDTO = (category: string) => Promise<{ data: GalleryItem[] | null; error: any }>;
+export type createGalleryItemDTO = (item: Omit<GalleryItemInsert, "project_id">) => Promise<{ data: GalleryItem | null; error: any }>;
+export type updateGalleryItemDTO = (id: string, updates: GalleryItemUpdate) => Promise<{ data: GalleryItem | null; error: any }>;
+export type deleteGalleryItemDTO = (id: string) => Promise<{ data: GalleryItem | null; error: any }>;
+
+// Define a type for all query methods
+export type GalleryQueries = {
+  getGalleryItems: getGalleryItemsDTO;
+  getFeaturedGalleryItems: getFeaturedGalleryItemsDTO;
+  getGalleryItemsByCategory: getGalleryItemsByCategoryDTO;
+  createGalleryItem: createGalleryItemDTO;
+  updateGalleryItem: updateGalleryItemDTO;
+  deleteGalleryItem: deleteGalleryItemDTO;
+};
+
+export const initGallery = (supabase: SupabaseClient, projectId: string): GalleryQueries => {
   // 🔓 Public Query - Get Gallery Items
-  const getGalleryItems = async () => {
+  const getGalleryItems = async (): Promise<{ data: GalleryItem[] | null; error: any }> => {
     try {
       const { data, error } = await supabase
         .from("gallery_items")
@@ -26,7 +43,7 @@ export const initGallery = (supabase: SupabaseClient, projectId: string) => {
   };
 
   // 🔓 Public Query - Get Featured Gallery Items
-  const getFeaturedGalleryItems = async () => {
+  const getFeaturedGalleryItems = async (): Promise<{ data: GalleryItem[] | null; error: any }> => {
     try {
       const { data, error } = await supabase
         .from("gallery_items")
@@ -43,7 +60,7 @@ export const initGallery = (supabase: SupabaseClient, projectId: string) => {
   };
 
   // 🔓 Public Query - Get Gallery Items by Category
-  const getGalleryItemsByCategory = async (category: string) => {
+  const getGalleryItemsByCategory = async (category: string): Promise<{ data: GalleryItem[] | null; error: any }> => {
     try {
       const { data, error } = await supabase
         .from("gallery_items")
@@ -60,7 +77,7 @@ export const initGallery = (supabase: SupabaseClient, projectId: string) => {
   };
 
   // 🔐 Admin Function - Create Gallery Item
-  const createGalleryItem = async (item: Omit<GalleryItemInsert, "project_id">) => {
+  const createGalleryItem = async (item: Omit<GalleryItemInsert, "project_id">): Promise<{ data: GalleryItem | null; error: any }> => {
     try {
       const auth = await checkProjectAuthorization(supabase, projectId);
       if (!auth.isAuthorized) {
@@ -81,7 +98,7 @@ export const initGallery = (supabase: SupabaseClient, projectId: string) => {
   };
 
   // 🔐 Admin Function - Update Gallery Item
-  const updateGalleryItem = async (id: string, updates: GalleryItemUpdate) => {
+  const updateGalleryItem = async (id: string, updates: GalleryItemUpdate): Promise<{ data: GalleryItem | null; error: any }> => {
     try {
       const auth = await checkProjectAuthorization(supabase, projectId);
       if (!auth.isAuthorized) {
@@ -116,7 +133,7 @@ export const initGallery = (supabase: SupabaseClient, projectId: string) => {
   };
 
   // 🔐 Admin Function - Delete Gallery Item
-  const deleteGalleryItem = async (id: string) => {
+  const deleteGalleryItem = async (id: string): Promise<{ data: GalleryItem | null; error: any }> => {
     try {
       const auth = await checkProjectAuthorization(supabase, projectId);
       if (!auth.isAuthorized) {
@@ -146,4 +163,4 @@ export const initGallery = (supabase: SupabaseClient, projectId: string) => {
     updateGalleryItem,
     deleteGalleryItem,
   };
-}
+};
