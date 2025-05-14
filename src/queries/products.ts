@@ -1,6 +1,6 @@
 import { SupabaseClient } from '@supabase/supabase-js';
-import { checkProjectAuthorization } from "../utils";
-import { Tables, TablesInsert, TablesUpdate } from "../types";
+import { checkProjectAuthorization } from "../utils.js";
+import { Tables, TablesInsert, TablesUpdate } from "../types.js";
 
 
 // Types

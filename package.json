@@ -1,12 +1,22 @@
 {
     "name": "supabase-handler",
     "version": "0.1.0",
-    "main": "dist/index.js",
-    "types": "dist/index.d.ts",
+    "type": "module",
+    "main": "./dist/index.js",
+    "exports": {
+        ".": {
+            "import": "./dist/index.js",
+            "types": "./dist/index.d.ts"
+        }
+    },
+    "types": "./dist/index.d.ts",
     "scripts": {
         "build": "tsc",
-        "dev": "tsc --watch"
+        "prepublishOnly": "npm run build"
     },
+    "keywords": [],
+    "author": "",
+    "license": "MIT",
     "dependencies": {
         "@supabase/supabase-js": "^2.49.4",
         "dotenv": "^16.0.0"

@@ -1,10 +1,10 @@
-import { createSupabaseClient } from 'src/client';
-import { Database } from './types';
-import { initArticles } from './queries/articles';
-import { initAuth } from './queries/auth';
-import { initGallery } from './queries/gallery';
-import { initProducts } from './queries/products';
-import { initTestimonials } from './queries/testimonials';
+import { Database } from './types.js';
+import { initArticles } from './queries/articles.js';
+import { initAuth } from './queries/auth.js';
+import { initGallery } from './queries/gallery.js';
+import { initProducts } from './queries/products.js';
+import { initTestimonials } from './queries/testimonials.js';
+import { createSupabaseClient } from './client.js';
 
 type DBHelper = {
   articles: ReturnType<typeof initArticles>;
@@ -49,7 +49,7 @@ export {
   updateArticleStatusDTO,
   deleteArticleDTO,
   ArticlesQueries,
-} from './queries/articles';
+} from './queries/articles.js';
 
 export {
   GalleryItem,
@@ -62,7 +62,7 @@ export {
   updateGalleryItemDTO,
   deleteGalleryItemDTO,
   GalleryQueries,
-} from './queries/gallery';
+} from './queries/gallery.js';
 
 export {
   Product,
@@ -75,7 +75,7 @@ export {
   updateProductDTO,
   deleteProductDTO,
   ProductsQueries,
-} from './queries/products';
+} from './queries/products.js';
 
 export {
   Testimonial,
@@ -87,4 +87,4 @@ export {
   updateTestimonialDTO,
   deleteTestimonialDTO,
   TestimonialsQueries,
-} from './queries/testimonials';
+} from './queries/testimonials.js';

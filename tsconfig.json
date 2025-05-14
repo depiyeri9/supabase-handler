@@ -1,17 +1,22 @@
 {
-    "compilerOptions": {
-      "target": "ES2020",
-      "module": "commonjs",
-      "declaration": true,
-      "outDir": "dist",
-      "strict": true,
-      "esModuleInterop": true,
-      "resolveJsonModule": true,
-      "moduleResolution": "node",
-      "skipLibCheck": true,
-      "baseUrl": ".",
-    },
-    "include": ["src"],
-    "exclude": ["node_modules", "dist"]
-  }
-  
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "outDir": "dist",
+    "declaration": true,
+    "declarationDir": "dist",
+    "sourceMap": false,
+    "esModuleInterop": true,
+    "strict": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true
+  },
+  "include": [
+    "src"
+, "test/products.test.ts", "test/client.test.ts"  ],
+  "exclude": [
+    "node_modules",
+    "dist"
+  ]
+}
