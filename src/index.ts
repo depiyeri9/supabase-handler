@@ -1,12 +1,12 @@
-import { createSupabaseClient } from 'src/client';
 import { Database } from './types';
 import { initArticles } from './queries/articles';
 import { initAuth } from './queries/auth';
 import { initGallery } from './queries/gallery';
 import { initProducts } from './queries/products';
 import { initTestimonials } from './queries/testimonials';
+import { createSupabaseClient } from './client';
 
-type DBHelper = {
+export type DBHelper = {
   articles: ReturnType<typeof initArticles>;
   gallery: ReturnType<typeof initGallery>;
   products: ReturnType<typeof initProducts>;
@@ -15,8 +15,8 @@ type DBHelper = {
 };
 
 export function initDB(projectId: string,
-  SUPABASE_URL: string = process.env.SUPABASE_URL || '',
-  SUPABASE_PUBLISHABLE_KEY: string = process.env.SUPABASE_PUBLISHABLE_KEY || ''
+  SUPABASE_URL: string = '',
+  SUPABASE_PUBLISHABLE_KEY: string = ''
 ): DBHelper {
   if (!projectId) throw new Error('projectId is required');
 
