@@ -107,6 +107,7 @@ export type Database = {
           name: string
           price: number
           project_id: string
+          category: string | null
         }
         Insert: {
           created_at?: string | null
@@ -117,6 +118,7 @@ export type Database = {
           name: string
           price: number
           project_id: string
+          category: string | null
         }
         Update: {
           created_at?: string | null
@@ -127,6 +129,7 @@ export type Database = {
           name?: string
           price?: number
           project_id?: string
+          category?: string | null
         }
         Relationships: [
           {
